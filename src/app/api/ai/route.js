@@ -1,171 +1,91 @@
 import OpenAI from "openai";
 
 const openai = new OpenAI({
-    apiKey:process.env["OPENAI_API_KEY"],//this is default and can be omitted
+    apiKey: process.env["OPENAI_API_KEY"],
 });
 
-const formalExample = {
-    japanese: [
-        { word: "日本", reading: "にほん" },
-        { word: "に" },
-        { word: "住んで", reading: "すんで" },
-        { word: "います" },
-        { word: "か" },
-        { word: "?" },
-    ],
-    grammarBreakdown: [
-        {
-        english: "Do you live in Japan?",
-        japanese: [
-            { word: "日本", reading: "にほん" },
-            { word: "に" },
-            { word: "住んで", reading: "すんで" },
-            { word: "います" },
-            { word: "か" },
-            { word: "?" },
+const cochabambaExamples = {
+    "Qué es Cochabamba": {
+        spanish: [
+            { word: "¿Qué" },
+            { word: "es" },
+            { word: "Cochabamba?" },
         ],
-        chunks: [
-            {
-            japanese: [{ word: "日本", reading: "にほん" }],
-            meaning: "Japan",
-            grammar: "Noun",
-            },
-            {
-            japanese: [{ word: "に" }],
-            meaning: "in",
-            grammar: "Particle",
-            },
-            {
-            japanese: [{ word: "住んで", reading: "すんで" }, { word: "います" }],
-            meaning: "live",
-            grammar: "Verb + て form + います",
-            },
-            {
-            japanese: [{ word: "か" }],
-            meaning: "question",
-            grammar: "Particle",
-            },
-            {
-            japanese: [{ word: "?" }],
-            meaning: "question",
-            grammar: "Punctuation",
-            },
+        content: "Cochabamba es una ciudad situada en el centro de Bolivia, conocida por su clima agradable, su cultura vibrante y sus lugares históricos.",
+    },
+    "Qué se puede hacer en Cochabamba": {
+        spanish: [
+            { word: "¿Qué" },
+            { word: "se" },
+            { word: "puede" },
+            { word: "hacer" },
+            { word: "en" },
+            { word: "Cochabamba?" },
         ],
-        },
-    ],
-};
-  
-const casualExample = {
-    japanese: [
-        { word: "日本", reading: "にほん" },
-        { word: "に" },
-        { word: "住んで", reading: "すんで" },
-        { word: "いる" },
-        { word: "の" },
-        { word: "?" },
-    ],
-    grammarBreakdown: [
-        {
-        english: "Do you live in Japan?",
-        japanese: [
-            { word: "日本", reading: "にほん" },
-            { word: "に" },
-            { word: "住んで", reading: "すんで" },
-            { word: "いる" },
-            { word: "の" },
-            { word: "?" },
+        content: "En Cochabamba, puedes visitar lugares como el Cristo de la Concordia, la laguna Alalay, el Parque Tunari, y disfrutar de la rica gastronomía local.",
+    },
+    "Dónde está ubicada Cochabamba": {
+        spanish: [
+            { word: "¿Dónde" },
+            { word: "está" },
+            { word: "ubicada" },
+            { word: "Cochabamba?" },
         ],
-        chunks: [
-            {
-            japanese: [{ word: "日本", reading: "にほん" }],
-            meaning: "Japan",
-            grammar: "Noun",
-            },
-            {
-            japanese: [{ word: "に" }],
-            meaning: "in",
-            grammar: "Particle",
-            },
-            {
-            japanese: [{ word: "住んで", reading: "すんで" }, { word: "いる" }],
-            meaning: "live",
-            grammar: "Verb + て form + いる",
-            },
-            {
-            japanese: [{ word: "の" }],
-            meaning: "question",
-            grammar: "Particle",
-            },
-            {
-            japanese: [{ word: "?" }],
-            meaning: "question",
-            grammar: "Punctuation",
-            },
-        ],
-        },
-    ],
+        content: "Cochabamba está situada en el centro de Bolivia, en el valle del mismo nombre, rodeada de montañas y con un clima templado.",
+    },
 };
 
-export async function GET(req){
-    const speech = req.nextUrl.searchParams.get("speech") || "formal";
-    const speechExample = speech === "formal" ? formalExample : casualExample;
+export async function GET(req) {
+    const question = req.nextUrl.searchParams.get("question");
+   const cochabambaExample = cochabambaExamples[question];
 
-    const chatCompletion = await openai.chat.completions.create({
-        messages: [
-        {
-            role: "system",
-            content: `You are a Japanese language teacher. 
-    Your student asks you how to say something from english to japanese.
-    You should respond with: 
-    - english: the english version ex: "Do you live in Japan?"
-    - japanese: the japanese translation in split into words ex: ${JSON.stringify(
-            speechExample.japanese
-            )}
-    - grammarBreakdown: an explanation of the grammar structure per sentence ex: ${JSON.stringify(
-            speechExample.grammarBreakdown
-            )}
-    `,
-        },
-        {
-            role: "system",
-            content: `You always respond with a JSON object with the following format: 
-            {
-            "english": "",
-            "japanese": [{
-                "word": "",
-                "reading": ""
-            }],
-            "grammarBreakdown": [{
-                "english": "",
-                "japanese": [{
-                "word": "",
-                "reading": ""
-                }],
-                "chunks": [{
-                "japanese": [{
-                    "word": "",
-                    "reading": ""
-                }],
-                "meaning": "",
-                "grammar": ""
-                }]
-            }]
-            }`,
-        },
-        {
-            role: "user",
-            content: `How to say ${
-            req.nextUrl.searchParams.get("question") ||
-            "Have you ever been to Japan?"
-            } in Japanese in ${speech} speech?`,
-        },
-        ],
-        // model: "gpt-4-turbo-preview", // https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo
-        model: "gpt-3.5-turbo", // https://help.openai.com/en/articles/7102672-how-can-i-access-gpt-4
-        response_format: {
-        type: "json_object",
-        },
-    });
-    console.log(chatCompletion.choices[0].message.content);
-    return Response.json(JSON.parse(chatCompletion.choices[0].message.content));  
+    /*if (!cochabambaExample) {
+        return Response.json({ error: "La pregunta no es válida" });
+    }*/
+    try {
+        const chatCompletion = await openai.chat.completions.create({
+            messages: [
+                {
+                    role: "system",
+                    content: `Eres un guía turístico local en Cochabamba. Tu cliente te está haciendo una pregunta sobre la ciudad. Debes responder con: 
+                    - spanish: la versión en español de la pregunta, dividida en palabras ej: ${JSON.stringify(
+                        cochabambaExample.spanish
+                    )}
+                    - content: Tu respuesta proporcionando información sobre la ciudad.`,
+                },
+                {
+                    role: "system",
+                    content: `Siempre debes responder con un objeto JSON con el siguiente formato: 
+                    {
+                        "spanish": [
+                            {
+                                "word": ""
+                            }
+                        ],
+                        "content": ""
+                    }`,
+                },
+                {
+                    role: "user",
+                    content: question,
+                },
+                // Agregar un mensaje dummy para cumplir con el requisito de JSON
+                /*{
+                    role: "system",
+                    content: "Este es un mensaje dummy para cumplir con el requisito de JSON.",
+                }*/
+            ],        
+            // model: "gpt-4-turbo-preview", // https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo
+            model: "gpt-3.5-turbo", // https://help.openai.com/en/articles/7102672-how-can-i-access-gpt-4
+            response_format: {
+                type: "json_object",
+            },
+        });
+        console.log("Respuesta de la API de OpenAI:", chatCompletion);
+        return Response.json(JSON.parse(chatCompletion.choices[0].message.content));
+    }catch(error){
+        return Response.json({ error: "Error al procesar la solicitud. Por favor, inténtalo de nuevo más tarde." });
+    }
 }
+
+        

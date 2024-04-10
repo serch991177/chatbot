@@ -15,8 +15,8 @@ export async function GET(req){
   //es-BO-SofiaNeural
   //es-US-PalomaNeural (Female)
   //en-US-JennyNeural (Female)
-  const teacher = req.nextUrl.searchParams.get("teacher") || "Jenny";
-  speechConfig.speechSynthesisVoiceName = `en-US-${teacher}Neural`;
+  const teacher = req.nextUrl.searchParams.get("teacher") || "Sofia";
+  speechConfig.speechSynthesisVoiceName = `es-BO-${teacher}Neural`;
 
   const speechSynthesizer = new sdk.SpeechSynthesizer(speechConfig);
   const visemes = [];

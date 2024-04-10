@@ -3,9 +3,14 @@ import { CameraControls, Environment, Gltf, OrbitControls } from "@react-three/d
 import { Canvas } from "@react-three/fiber";
 import { Teacher } from "./Teacher";
 import { degToRad } from "three/src/math/MathUtils";
+import { TypingBox } from "./TypingBox";
+
 export const Experience = () => {
     return (
         <>
+            <div className="z-10 md:justify-center fixed bottom-4 left-4 right-4 flex gap-3 flex-wrap justify-stretch">
+                <TypingBox />
+            </div>
             <Canvas
                 camera={{
                     position:[0,0,0.0001],

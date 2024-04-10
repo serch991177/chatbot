@@ -37,7 +37,7 @@ const cochabambaExamples = {
 
 export async function GET(req) {
     const question = req.nextUrl.searchParams.get("question");
-   const cochabambaExample = cochabambaExamples[question];
+    const cochabambaExample = cochabambaExamples[question];
 
     /*if (!cochabambaExample) {
         return Response.json({ error: "La pregunta no es válida" });

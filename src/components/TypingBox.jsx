@@ -32,9 +32,15 @@ export const TypingBox = () => {
         <div className="gap-3 flex">
           <input
             className="focus:outline focus:outline-white/80 flex-grow bg-slate-800/60 p-2 px-4 rounded-full text-white placeholder:text-white/50 shadow-inner shadow-slate-900/60"
-            placeholder="Escribe algo que quieras traducir?"
+            placeholder="Escribe algo que quieras saber sobre Cochabamba?"
             value={question}
-            onChange={(e) => setQuestion(e.target.value)}
+            //onChange={(e) => setQuestion(e.target.value)}
+            //onChange={(e) => setQuestion(e.target.value.toUpperCase())} // Convertir a mayúsculas
+            onChange={(e) => {
+                const inputValue = e.target.value.toUpperCase(); // Convertir a mayúsculas
+                const onlyLetters = inputValue.replace(/[^A-ZÁÉÍÓÚÜ\s]/g, ''); // Solo letras, vocales y espacio
+                setQuestion(onlyLetters);
+            }}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 ask();

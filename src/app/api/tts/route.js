@@ -33,7 +33,7 @@ export async function GET(req){
   const audioStream = await new Promise((resolve,reject)=>{
     speechSynthesizer.speakTextAsync(
         req.nextUrl.searchParams.get("text") || 
-        "I'm excited to try text to speech",
+        "Hola Como estas, Lo siento por el momento no tengo informacion sobre la pregunta",
         (result) => {
             const { audioData } = result;
             speechSynthesizer.close();

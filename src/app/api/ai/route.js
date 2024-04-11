@@ -5,32 +5,13 @@ const openai = new OpenAI({
 });
 
 const cochabambaExamples = {
-    "Qué es Cochabamba": {
-        spanish: [
-            { word: "¿Qué" },
-            { word: "es" },
-            { word: "Cochabamba?" },
-        ],
+    "QUE ES COCHABAMBA": {
         content: "Cochabamba es una ciudad situada en el centro de Bolivia, conocida por su clima agradable, su cultura vibrante y sus lugares históricos.",
     },
-    "Qué se puede hacer en Cochabamba": {
-        spanish: [
-            { word: "¿Qué" },
-            { word: "se" },
-            { word: "puede" },
-            { word: "hacer" },
-            { word: "en" },
-            { word: "Cochabamba?" },
-        ],
+    "QUE SE PUEDE HACER EN COCHABAMBA": {
         content: "En Cochabamba, puedes visitar lugares como el Cristo de la Concordia, la laguna Alalay, el Parque Tunari, y disfrutar de la rica gastronomía local.",
     },
-    "Dónde está ubicada Cochabamba": {
-        spanish: [
-            { word: "¿Dónde" },
-            { word: "está" },
-            { word: "ubicada" },
-            { word: "Cochabamba?" },
-        ],
+    "DONDE ESTA UBICADA COCHABAMBA": {
         content: "Cochabamba está situada en el centro de Bolivia, en el valle del mismo nombre, rodeada de montañas y con un clima templado.",
     },
 };

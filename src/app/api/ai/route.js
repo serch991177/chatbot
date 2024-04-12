@@ -5,15 +5,24 @@ const openai = new OpenAI({
 });
 
 const cochabambaExamples = {
-    "QUE ES COCHABAMBA": {
+    /*"QUE ES COCHABAMBA": {
         content: "Cochabamba es una ciudad situada en el centro de Bolivia, conocida por su clima agradable, su cultura vibrante y sus lugares históricos.",
     },
     "QUE SE PUEDE HACER EN COCHABAMBA": {
         content: "En Cochabamba, puedes visitar lugares como el Cristo de la Concordia, la laguna Alalay, el Parque Tunari, y disfrutar de la rica gastronomía local.",
-    },
+    },   
     "DONDE ESTA UBICADA COCHABAMBA": {
         content: "Cochabamba está situada en el centro de Bolivia, en el valle del mismo nombre, rodeada de montañas y con un clima templado.",
+    },*/
+    "QUE ES EL TRAMITE DE VISADO ANTEPROYECTO DE URBANIZACION":{
+        content:"Es un tramite a realizar cuando se requiere urbanizar un terreno de u propiedad con superficie a 1300 m2, con caracter previo al diseño de los planos definitivos del proyecto de urbanizacion, debe solicitar al G.A.M.C. la visacion de los planos del anteproyecto.",
     },
+    "DONDE SE REALIZA EL TRAMITE DE VISADO ANTEPROYECTO DE URBANIZACION":{
+        content:"Se puede realizar en la Sub Alcaldia a la que corresponde el predio.",
+    },
+    "CUALES SON LOS COSTOS DEL TRAMITE DE VISADO ANTEPROYECTO DE URBANIZACION":{
+        content:"El costo depende del terreno por ejemplo la tasa de visacion de anteproyecto: por terreno plano m2 es 0.05 Bs/m2",
+    },      
 };
 
 export async function GET(req) {
@@ -28,11 +37,11 @@ export async function GET(req) {
             messages: [
                 {
                     role: "system",
-                    content: `Eres un guía turístico local en Cochabamba. Tu cliente te está haciendo una pregunta sobre la ciudad. Debes responder con: 
+                    content: `Eres un asistente virtual de tramites del Gobierno Municipal de Cochabamba (Alcaldia de Cochabamba). Tu cliente te está haciendo una pregunta sobre tramites realizados o que se realizan en la subalcaldia de Cochabamba. Debes responder con: 
                     - spanish: la versión en español de la pregunta, dividida en palabras ej: ${JSON.stringify(
                         cochabambaExample.spanish
                     )}
-                    - content: Tu respuesta proporcionando información sobre la ciudad.`,
+                    - content: Tu respuesta proporcionando información sobre procesos de tramites en sub alcaldias de Cochabamba.`,
                 },
                 {
                     role: "system",
@@ -62,8 +71,17 @@ export async function GET(req) {
                 type: "json_object",
             },
         });
+
+        // Parsea la respuesta del modelo de ChatGPT
+        const chatResponse = JSON.parse(chatCompletion.choices[0].message.content);
+        // Combinar la respuesta de ChatGPT con el contenido predefinido
+        const combinedResponse = {
+            spanish: cochabambaExample.spanish,
+            content: `${cochabambaExample.content} ${chatResponse.content}`,
+        };
         console.log("Respuesta de la API de OpenAI:", chatCompletion);
-        return Response.json(JSON.parse(chatCompletion.choices[0].message.content));
+        //return Response.json(JSON.parse(chatCompletion.choices[0].message.content));
+        return Response.json(combinedResponse);
     }catch(error){
         return Response.json({ error: "Error al procesar la solicitud. Por favor, inténtalo de nuevo más tarde." });
     }

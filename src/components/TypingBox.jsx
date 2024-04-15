@@ -22,7 +22,8 @@ export const TypingBox = () => {
 
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript.toUpperCase();
-      setQuestion(transcript);
+      const normalizedTranscript = normalizeText(transcript);
+      setQuestion(normalizedTranscript);
     };
 
     recognition.start();
@@ -38,6 +39,10 @@ export const TypingBox = () => {
       setIsSpeaking(false);
     };
   }, []);
+
+  const normalizeText = (text) => {
+    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  };
 
   return (
     <div

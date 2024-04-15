@@ -1,9 +1,10 @@
 "use client";
-import { CameraControls, Environment, Gltf, OrbitControls } from "@react-three/drei";
+import { CameraControls, Environment, Gltf, OrbitControls,Html } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Teacher } from "./Teacher";
 import { degToRad } from "three/src/math/MathUtils";
 import { TypingBox } from "./TypingBox";
+import { MessagesList } from "./MessagesList";
 
 export const Experience = () => {
     return (
@@ -19,6 +20,13 @@ export const Experience = () => {
                 <CameraManager/>
                 <Environment preset="sunset" />
                 <ambientLight intensity={0.8} color="pink" />
+                {/*posicion del mensaje
+                <Html position={[0.22,0.192,-3]} transform>
+                    <MessagesList/>
+                </Html>*/}
+                <Html position={[0.22,0.192,-3]} transform distanceFactor={0.5}>
+                    <MessagesList/>
+                </Html>
                 <Teacher 
                     teacher={"Nanami"} 
                     position={[-1,-1.7,-3]} 

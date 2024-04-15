@@ -100,7 +100,8 @@ export const TypingBox = () => {
             value={question}
             onChange={(e) => {
               const inputValue = e.target.value.toUpperCase();
-              const onlyLetters = inputValue.replace(/[^A-ZÁÉÍÓÚÜ\s]/g, '');
+              //const onlyLetters = inputValue.replace(/[^A-ZÁÉÍÓÚÜ\s]/g, '');
+              const onlyLetters = inputValue.replace(/[^A-ZÁÉÍÓÚÜ0-9\s]/gi, '');
               setQuestion(onlyLetters);
             }}
             onKeyDown={(e) => {

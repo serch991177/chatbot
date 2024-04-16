@@ -5,13 +5,25 @@ import { Teacher } from "./Teacher";
 import { degToRad } from "three/src/math/MathUtils";
 import { TypingBox } from "./TypingBox";
 import { MessagesList } from "./MessagesList";
+import React, { useState } from "react";
+
 
 export const Experience = () => {
+    const [typingBoxVisible, setTypingBoxVisible] = useState(true);
+    
+    const hideTypingBox = () => {
+        setTypingBoxVisible(false);
+    };
+    const visibleTypingBox = () => {
+        setTypingBoxVisible(true);
+    };
     return (
         <>
+            {typingBoxVisible && (
             <div className="z-10 md:justify-center fixed bottom-4 left-4 right-4 flex gap-3 flex-wrap justify-stretch">
-                <TypingBox />
+                <TypingBox hideTypingBox={hideTypingBox} visibleTypingBox={visibleTypingBox} />
             </div>
+            )}
             <Canvas
                 camera={{
                     position:[0,0,0.0001],
@@ -25,7 +37,7 @@ export const Experience = () => {
                     <MessagesList/>
                 </Html>*/}
                 <Html position={[0.22,0.192,-3]} transform distanceFactor={0.5}>
-                    <MessagesList/>
+                    <MessagesList visibleTypingBox={visibleTypingBox} />
                 </Html>
                 <Teacher 
                     teacher={"Nanami"} 

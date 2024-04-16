@@ -1,7 +1,7 @@
 import { useAITeacher } from "@/hooks/useAITeacher";
 import { useEffect, useRef, useState } from "react";
 
-export const MessagesList = () => {
+export const MessagesList = ({visibleTypingBox}) => {
   const messages = useAITeacher((state) => state.messages);
   const playMessage = useAITeacher((state) => state.playMessage);
   const { currentMessage } = useAITeacher();
@@ -31,6 +31,7 @@ export const MessagesList = () => {
   const handleYesClick = () => {
     // Lógica para el botón "Sí"
     setShowQuestionButtons(false);
+    visibleTypingBox();
   };
 
   const handleNoClick = () => {
@@ -38,6 +39,7 @@ export const MessagesList = () => {
     setShowQuestionButtons(false);
     // Limpiar el contenido y establecer messages.length en 0
     useAITeacher.setState({ messages: [] });
+    visibleTypingBox();
   };
 
   return (

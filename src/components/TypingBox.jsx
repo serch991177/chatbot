@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { useAITeacher } from "@/hooks/useAITeacher";
 
-export const TypingBox = () => {
+
+export const TypingBox = ({hideTypingBox }) => {
   const askAI = useAITeacher((state) => state.askAI);
   const loading = useAITeacher((state) => state.loading);
   const [question, setQuestion] = useState("");
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Definir isLoading aquí
+
 
   const handleSpeechRecognition = () => {
     const recognition = new window.webkitSpeechRecognition();
@@ -30,15 +33,25 @@ export const TypingBox = () => {
   };
 
   const ask = () => {
+    setIsLoading(true);
     askAI(question);
     setQuestion("");
+    //hideTypingBox(); // Llamar a la función para ocultar el TypingBox
   };
 
-  useEffect(() => {
+  /*useEffect(() => {
     return () => {
       setIsSpeaking(false);
     };
-  }, []);
+  }, []);*/
+  useEffect(() => {
+    // Cuando loading cambia a false (cuando finaliza el efecto de carga),
+    // oculta el TypingBox
+    if (!loading && isLoading) {
+        setIsLoading(false);
+        hideTypingBox(); // Oculta el TypingBox
+    }
+}, [loading]);
 
   const normalizeText = (text) => {
     return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");

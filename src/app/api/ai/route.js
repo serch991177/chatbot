@@ -5,7 +5,28 @@ const openai = new OpenAI({
 });
 
 const cochabambaExamples = {
-    "QUE ES EL TRAMITE DE VISADO ANTEPROYECTO DE URBANIZACION": {
+    "HOLA":{
+        content:"Me alegra escucharte. ¿Hay algo en particular en lo que pueda ayudarte?",
+    },
+    "QUIEN ERES":{
+        content:"Soy INNOVA ASISTENTE, una asistente virtual basada en inteligencia artificial implementada por la Alcaldía de Cochabamba, Estoy aquí para ayudarte con preguntas, conversaciones o cualquier otra cosa con referencia a los tramites que se realizan en la alcaldía de Cochabamba o sus 7 sub alcaldías.",
+    },
+    "COMO FUNCIONAS":{
+        content:"Funciono procesando el texto que me proporcionas y generando respuestas basadas en mi comprensión del lenguaje natural y mi entrenamiento con una gran cantidad que la alcaldía me proporciono para aprender",
+    },
+    "QUE PUEDES HACER":{
+        content:"Puedo ayudarte a responder preguntas, proporcionar información sobre los temas de la alcaldía de Cochabamba.",
+    },
+    "DE DONDE OBTIENES TU INFORMACION":{
+        content:"Mi conocimiento se basa en información proporcionada por la alcaldía de Cochabamba, y otras fuentes de información pública.",
+    },
+    "PUEDES APRENDER":{
+        content:"Sí, puedo aprender de nuevas interacciones contigo y mejorar mis respuestas con el tiempo",
+    },
+    "TIENES EMOCIONES":{
+        content:"No tengo emociones ni conciencia propia. Soy un programa de inteligencia artificial diseñado para procesar y generar respuestas basadas en el texto que recibo.",
+    },
+    /*"QUE ES EL TRAMITE DE VISADO ANTEPROYECTO DE URBANIZACION": {
         content: "Es un trámite a realizar cuando se requiere urbanizar un terreno de su propiedad con superficie a 1300 m2, con carácter previo al diseño de los planos definitivos del proyecto de urbanización, debe solicitar al G.A.M.C. la visación de los planos del anteproyecto.",
     },
     "DONDE SE REALIZA EL TRAMITE DE VISADO ANTEPROYECTO DE URBANIZACION": {
@@ -19,7 +40,7 @@ const cochabambaExamples = {
     },
     "CUALES SON LOS COSTOS DEL TRAMITE":{
         content: "Por favor sea mas especifico sobre el costo que quiera saber",
-    },
+    },*/
 };
 
 // Función para calcular la distancia de Levenshtein entre dos cadenas

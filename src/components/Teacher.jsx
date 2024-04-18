@@ -3,7 +3,7 @@ import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { MathUtils } from "three";
 
-export const teachers = ["Nanami","Naoki","Octopus","Totoro","Biomech"];
+export const teachers = ["Nanami","Naoki","Octopus","Totoro","Biomech","Claudia"];
 
 export const Teacher = ({teacher, ...props}) =>{
     const {scene} = useGLTF(`/models/Teacher_${teacher}.glb`);

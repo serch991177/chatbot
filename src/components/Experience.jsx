@@ -40,12 +40,12 @@ export const Experience = () => {
                     <MessagesList visibleTypingBox={visibleTypingBox} />
                 </Html>
                 <Teacher 
-                    teacher={"Nanami"} 
-                    position={[-1,-1.7,-3]} 
-                    scale={1.5} 
+                    teacher={"Claudia"} 
+                    position={[-1,-1.5,-3]} 
+                    scale={0.01} 
                     rotation-y={degToRad(20)}
                 />
-                <Gltf src="/models/classroom_default.glb" position={[0.2,-1.7,-2]}/>
+                <Gltf src="/models/Oficina.glb" position={[0.2,-1.7,-2]}/>
             </Canvas>
         </>
     );

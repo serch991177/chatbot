@@ -7,8 +7,8 @@ import { TypingBox } from "./TypingBox";
 import { MessagesList } from "./MessagesList";
 import React, { useState } from "react";
 
-
 export const Experience = () => {
+    const [animationIndex,setAnimationIndex] = useState(0);
     const [typingBoxVisible, setTypingBoxVisible] = useState(true);
     
     const hideTypingBox = () => {
@@ -17,11 +17,16 @@ export const Experience = () => {
     const visibleTypingBox = () => {
         setTypingBoxVisible(true);
     };
+    const changeAnimation = (ind) => {
+        console.log("vamos a cambiar la animacion");
+        setAnimationIndex(ind);
+    }
+
     return (
         <>
             {typingBoxVisible && (
             <div className="z-10 md:justify-center fixed bottom-4 left-4 right-4 flex gap-3 flex-wrap justify-stretch">
-                <TypingBox hideTypingBox={hideTypingBox} visibleTypingBox={visibleTypingBox} />
+                <TypingBox hideTypingBox={hideTypingBox} visibleTypingBox={visibleTypingBox} changeAnimation={changeAnimation}/>                
             </div>
             )}
             <Canvas
@@ -37,14 +42,17 @@ export const Experience = () => {
                     <MessagesList/>
                 </Html>*/}
                 <Html position={[0.22,0.192,-3]} transform distanceFactor={0.5}>
-                    <MessagesList visibleTypingBox={visibleTypingBox} />
+                    <MessagesList visibleTypingBox={visibleTypingBox} changeAnimation={changeAnimation}/>
                 </Html>
                 <Teacher 
                     teacher={"Claudia"} 
                     position={[-1,-1.5,-3]} 
                     scale={0.01} 
                     rotation-y={degToRad(20)}
+                    animationIndex={animationIndex}
+                    changeAnimation={changeAnimation}
                 />
+
                 <Gltf src="/models/Oficina.glb" position={[0.2,-1.7,-2]}/>
             </Canvas>
         </>

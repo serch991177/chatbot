@@ -1,7 +1,7 @@
 import { useAITeacher } from "@/hooks/useAITeacher";
 import { useEffect, useRef, useState } from "react";
 
-export const MessagesList = ({visibleTypingBox}) => {
+export const MessagesList = ({visibleTypingBox,changeAnimation}) => {
   const messages = useAITeacher((state) => state.messages);
   const playMessage = useAITeacher((state) => state.playMessage);
   const { currentMessage } = useAITeacher();
@@ -40,6 +40,7 @@ export const MessagesList = ({visibleTypingBox}) => {
     // Limpiar el contenido y establecer messages.length en 0
     useAITeacher.setState({ messages: [] });
     visibleTypingBox();
+    changeAnimation(2);
   };
 
   return (

@@ -71,6 +71,7 @@ export const useAITeacher = create((set, get) => ({
     get().playMessage(message);
   },
   playMessage: async (message) => {
+    
     set(() => ({
       currentMessage: message,
     }));
@@ -102,6 +103,7 @@ export const useAITeacher = create((set, get) => ({
         set(() => ({
           currentMessage: null,
         }));
+        console.log("detener animacion"); // Se imprime después de que termine la reproducción del audio
       };
       set(() => ({
         loading: false,
@@ -113,7 +115,7 @@ export const useAITeacher = create((set, get) => ({
         }),
       }));
     }
-
+    console.log("Reproduciendo mensaje..."); // Se imprime justo antes de iniciar la reproducción del audio
     message.audioPlayer.currentTime = 0;
     message.audioPlayer.play();
   },

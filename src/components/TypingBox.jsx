@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useAITeacher } from "@/hooks/useAITeacher";
 
 
-export const TypingBox = ({hideTypingBox }) => {
+export const TypingBox = ({hideTypingBox,changeAnimation }) => {
   const askAI = useAITeacher((state) => state.askAI);
   const loading = useAITeacher((state) => state.loading);
   const [question, setQuestion] = useState("");
@@ -36,6 +36,7 @@ export const TypingBox = ({hideTypingBox }) => {
     setIsLoading(true);
     askAI(question);
     setQuestion("");
+    //changeAnimation(1);
     //hideTypingBox(); // Llamar a la función para ocultar el TypingBox
   };
 
@@ -48,8 +49,8 @@ export const TypingBox = ({hideTypingBox }) => {
     // Cuando loading cambia a false (cuando finaliza el efecto de carga),
     // oculta el TypingBox
     if (!loading && isLoading) {
-        setIsLoading(false);
-        hideTypingBox(); // Oculta el TypingBox
+      setIsLoading(false);
+      hideTypingBox(); // Oculta el TypingBox
     }
 }, [loading]);
 
